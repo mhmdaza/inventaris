@@ -16,3 +16,4 @@ Database : <code>ci_barang</code><br/>
 # inventaris
 # inventaris
 # inventaris
+# skrispsi
