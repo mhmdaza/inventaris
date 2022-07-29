@@ -12,3 +12,4 @@
 Database : <code>ci_barang</code><br/>
 <br/>
 # Repository-Baru
+# Inventaris
