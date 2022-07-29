@@ -14,3 +14,4 @@ Database : <code>ci_barang</code><br/>
 # Repository-Baru
 # Inventaris
 # inventaris
+# inventaris
