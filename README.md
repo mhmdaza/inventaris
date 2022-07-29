@@ -8,12 +8,5 @@
 - Datatables
 - Chart.js
 
-### Keterangan <br/>
-Database : <code>ci_barang</code><br/>
-<br/>
-# Repository-Baru
-# Inventaris
-# inventaris
-# inventaris
-# inventaris
-# skrispsi
+### Keterangan
+Database : ci_barang
