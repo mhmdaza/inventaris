@@ -27,15 +27,6 @@ class Dashboard extends CI_Controller
         ];
         $data['slider'] = $this->admin->get('slider');
         $data['visimisi'] = $this->admin->getSetting();
-        // Line Chart
-        $bln = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-        $data['cbm'] = [];
-        $data['cbk'] = [];
-
-        foreach ($bln as $b) {
-            $data['cbm'][] = $this->admin->chartBarangMasuk($b);
-            $data['cbk'][] = $this->admin->chartBarangKeluar($b);
-        }
 
         $this->template->load('templates/dashboard', 'dashboard', $data);
     }

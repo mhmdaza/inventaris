@@ -20,14 +20,14 @@ class Auth extends CI_Controller
 
     public function index()
     {
-        
+
         $this->_has_login();
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim');
         $this->form_validation->set_rules('password', 'Password', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = 'Login Aplikasi';
+            $data['title'] = 'Login';
             $this->template->load('templates/auth', 'auth/login', $data);
         } else {
             $input = $this->input->post(null, true);
@@ -38,7 +38,7 @@ class Auth extends CI_Controller
                 if (password_verify($input['password'], $password)) {
                     $user_db = $this->auth->userdata($input['username']);
                     if ($user_db['is_active'] != 1) {
-                        set_pesan('akun anda belum aktif/dinonaktifkan. Silahkan hubungi admin.', false);
+                        set_pesan('Akun anda belum aktif/dinonaktifkan. Silahkan hubungi admin.', false);
                         redirect('login');
                     } else {
                         $userdata = [
@@ -50,11 +50,11 @@ class Auth extends CI_Controller
                         redirect('dashboard');
                     }
                 } else {
-                    set_pesan('password salah', false);
+                    set_pesan('Password salah', false);
                     redirect('auth');
                 }
             } else {
-                set_pesan('username belum terdaftar', false);
+                set_pesan('Username belum terdaftar', false);
                 redirect('auth');
             }
         }
@@ -64,7 +64,7 @@ class Auth extends CI_Controller
     {
         $this->session->unset_userdata('login_session');
 
-        set_pesan('anda telah berhasil logout');
+        set_pesan('Anda telah berhasil logout');
         redirect('auth');
     }
 
@@ -91,10 +91,10 @@ class Auth extends CI_Controller
 
             $query = $this->admin->insert('user', $input);
             if ($query) {
-                set_pesan('daftar berhasil. Selanjutnya silahkan hubungi admin untuk mengaktifkan akun anda.');
+                set_pesan('Daftar berhasil. Silahkan hubungi admin untuk mengaktifkan akun Anda.');
                 redirect('login');
             } else {
-                set_pesan('gagal menyimpan ke database', false);
+                set_pesan('Gagal menyimpan data.', false);
                 redirect('register');
             }
         }

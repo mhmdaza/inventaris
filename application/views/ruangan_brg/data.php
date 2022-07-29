@@ -4,16 +4,16 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                    Data Penempatan Barang
+                    Data Ruangan
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('penempatanbarang/add') ?>" class="btn btn-sm btn-info btn-icon-split">
+                <a href="<?= base_url('ruanganbarang/add') ?>" class="btn btn-sm btn-info btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Tambah Penempatan Barang
+                        Tambah Data
                     </span>
                 </a>
             </div>
@@ -24,22 +24,22 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Nama Penempatan</th>
+                    <th>Nama Ruangan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                if ($penempatanbarang) :
+                if ($ruanganbarang) :
                     $no = 1;
-                    foreach ($penempatanbarang as $s) :
-                        ?>
+                    foreach ($ruanganbarang as $s) :
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $s['nama_penempatan']; ?></td>
+                            <td><?= $s['nama_ruangan']; ?></td>
                             <th>
-                                <a href="<?= base_url('penempatanbarang/edit/') . $s['id_penempatan_brg'] ?>" class="btn btn-circle btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('penempatanbarang/delete/') . $s['id_penempatan_brg'] ?>" class="btn btn-circle btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="<?= base_url('ruanganbarang/edit/') . $s['id_ruangan'] ?>" class="btn btn-circle btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('ruanganbarang/delete/') . $s['id_ruangan'] ?>" class="btn btn-circle btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                             </th>
                         </tr>
                     <?php endforeach; ?>

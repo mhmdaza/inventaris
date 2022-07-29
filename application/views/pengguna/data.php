@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                    Riwayat Data Barang Keluar Habis Pakai
+                    Riwayat Data Penunjukan Pengguna Barang
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('barangkeluar/add') ?>" class="btn btn-sm btn-info btn-icon-split">
+                <a href="<?= base_url('pengguna/add') ?>" class="btn btn-sm btn-info btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
@@ -24,33 +24,31 @@
             <thead>
                 <tr>
                     <th>No. </th>
-                    <th>No Transaksi</th>
-                    <th>Tanggal</th>
+                    <th>Nama Pegawai</th>
+                    <th>NIP</th>
+                    <th>Jabatan</th>
                     <th>ID Barang</th>
-                    <th>Barang</th>
-                    <th>Ruangan</th>
-                    <th>User</th>
-                    <th>Jumlah</th>
+                    <th>Nama Barang</th>
+                    <th>Jenis Barang</th>
                     <th>Hapus</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($barangkeluar) :
-                    foreach ($barangkeluar as $bk) :
+                if ($pengguna) :
+                    foreach ($pengguna as $p) :
                 ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $bk['id_barang_keluar']; ?></td>
-                            <td><?= $bk['tanggal_keluar']; ?></td>
-                            <td><?= $bk['id_barang']; ?></td>
-                            <td><?= $bk['nama_barang']; ?></td>
-                            <td><?= $bk['nama_ruangan']; ?></td>
-                            <td><?= $bk['nama']; ?></td>
-                            <td><?= $bk['jumlah_keluar'] . ' ' . $bk['nama_satuan']; ?></td>
+                            <td><?= $p['nama_pegawai']; ?></td>
+                            <td><?= $p['nip']; ?></td>
+                            <td><?= $p['jabatan']; ?></td>
+                            <td><?= $p['id_barang']; ?></td>
+                            <td><?= $p['nama_barang']; ?></td>
+                            <td><?= $p['nama_jenis']; ?></td>
                             <td>
-                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
+                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('pengguna/delete/') . $p['id_pengguna'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

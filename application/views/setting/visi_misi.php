@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<h4 class="h5 align-middle m-0 font-weight-bold text-info">
-					Setting Web
+					Pengaturan Visi & Misi
 				</h4>
 			</div>
 		</div>
@@ -22,10 +22,10 @@
 				<tr>
 					<td><?= $setting['visi'] ?></td>
 					<td><?= $setting['misi'] ?></td>
-					<td>                                
+					<td>
 						<a href="<?= base_url('SettingWeb/editvisimisi/') . $setting['id'] ?>" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i>Edit</a>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+</div>

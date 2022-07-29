@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class SettingWeb extends CI_Controller {
+class SettingWeb extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -18,7 +19,7 @@ class SettingWeb extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -29,7 +30,6 @@ class SettingWeb extends CI_Controller {
 		$this->load->model('Admin_model', 'admin');
 		$this->load->library('form_validation');
 		$data['logo'] =  $this->admin->getSetting();
-
 	}
 
 	private function _validasi()
@@ -48,7 +48,7 @@ class SettingWeb extends CI_Controller {
 	}
 	public function index()
 	{
-		$data['title'] = "Setting App";
+		$data['title'] = "Pengaturan Web";
 		$data['setting'] = $this->admin->getSetting();
 
 		$this->template->load('templates/dashboard', 'setting/data', $data);
@@ -64,46 +64,47 @@ class SettingWeb extends CI_Controller {
 			$data['setting'] = $this->admin->getSetting();
 
 			$this->template->load('templates/dashboard', 'setting/edit', $data);
-		}else{
-		   $input = $this->input->post(null, true);
-            if (empty($_FILES['foto']['name'])) {
-                $insert = $this->admin->update('setting_app', 'id', $input['id'], $input);
-                if ($insert) {
-                    set_pesan('perubahan berhasil disimpan.');
-                } else {
-                    set_pesan('perubahan tidak disimpan.');
-                }
-                redirect('SettingWeb');
-            } else {
-                if ($this->upload->do_upload('foto') == false) {
-                    echo $this->upload->display_errors();
-                    die;
-                } else {
-                    if (userdata('foto') != 'user.png') {
-                        $old_image = FCPATH . 'assets/img/logo/' . userdata('foto');
-                        if(file_exists($old_image)){
-	                        if (!unlink($old_image)) {
-	                            set_pesan('gagal hapus foto lama.');
-	                            redirect('SettingWeb');
-	                        }
-                        }
-                    }
+		} else {
+			$input = $this->input->post(null, true);
+			if (empty($_FILES['foto']['name'])) {
+				$insert = $this->admin->update('setting_app', 'id', $input['id'], $input);
+				if ($insert) {
+					set_pesan('perubahan berhasil disimpan.');
+				} else {
+					set_pesan('perubahan tidak disimpan.');
+				}
+				redirect('SettingWeb');
+			} else {
+				if ($this->upload->do_upload('foto') == false) {
+					echo $this->upload->display_errors();
+					die;
+				} else {
+					if (userdata('foto') != 'user.png') {
+						$old_image = FCPATH . 'assets/img/logo/' . userdata('foto');
+						if (file_exists($old_image)) {
+							if (!unlink($old_image)) {
+								set_pesan('gagal hapus foto lama.');
+								redirect('SettingWeb');
+							}
+						}
+					}
 
-                    $input['logo'] = $this->upload->data('file_name');
-                    $update = $this->admin->update('setting_app', 'id', $input['id'], $input);
-                    if ($update) {
-                        set_pesan('perubahan berhasil disimpan.');
-                    } else {
-                        set_pesan('gagal menyimpan perubahan');
-                    }
-				  redirect('SettingWeb');                }
-            }
+					$input['logo'] = $this->upload->data('file_name');
+					$update = $this->admin->update('setting_app', 'id', $input['id'], $input);
+					if ($update) {
+						set_pesan('perubahan berhasil disimpan.');
+					} else {
+						set_pesan('gagal menyimpan perubahan');
+					}
+					redirect('SettingWeb');
+				}
+			}
 		}
 	}
 
 	public function visimisi()
 	{
-		$data['title'] = "Visi Dan Misi";
+		$data['title'] = "Pengaturan Visi Dan Misi";
 		$data['setting'] = $this->admin->getSetting();
 
 		$this->template->load('templates/dashboard', 'setting/visi_misi', $data);
@@ -119,16 +120,16 @@ class SettingWeb extends CI_Controller {
 			$data['setting'] = $this->admin->getSetting();
 
 			$this->template->load('templates/dashboard', 'setting/edit_visi_misi', $data);
-		}else{
-		   $input = $this->input->post(null, true);
-    
-            $update = $this->admin->update('setting_app', 'id', $input['id'], $input);
-                if ($update) {
-                    set_pesan('perubahan berhasil disimpan.');
-                } else {
-                    set_pesan('perubahan tidak disimpan.');
-                }
-                redirect('SettingWeb/visimisi');
+		} else {
+			$input = $this->input->post(null, true);
+
+			$update = $this->admin->update('setting_app', 'id', $input['id'], $input);
+			if ($update) {
+				set_pesan('perubahan berhasil disimpan.');
+			} else {
+				set_pesan('perubahan tidak disimpan.');
+			}
+			redirect('SettingWeb/visimisi');
 		}
 	}
 }

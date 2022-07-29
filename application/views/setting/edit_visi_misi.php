@@ -3,7 +3,7 @@
 		<div class="card shadow-sm border-bottom-info">
 			<div class="card-header bg-white py-3">
 				<h4 class="h5 align-middle m-0 font-weight-bold text-info">
-					Setting Web
+					Edit Visi & Misi
 				</h4>
 			</div>
 			<div class="card-body">

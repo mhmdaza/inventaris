@@ -48,25 +48,24 @@ class Barangmasuk extends CI_Controller
         } else {
             $barang_id    = $this->input->post('barang_id');
             $jumlah_masuk = $this->input->post('jumlah_masuk');
-            $masa_pakai   = $this->input->post('masa_pakai');
 
-            $dataBrgMasuk=array(
-                'id_barang_masuk'=> $this->input->post('id_barang_masuk'),
+            $dataBrgMasuk = array(
+                'id_barang_masuk' => $this->input->post('id_barang_masuk'),
                 'supplier_id'   => $this->input->post('supplier_id'),
                 'user_id'       => $this->session->userdata('login_session')['user'],
                 'barang_id'     => $barang_id,
                 'jumlah_masuk'  => $this->input->post('jumlah_masuk'),
                 'tanggal_masuk' => $this->input->post('tanggal_masuk'),
+                'total_harga'   => $this->input->post('total_harga'),
             );
-            
+
             $data_barang = $this->db->query("SELECT * from barang where id_barang='$barang_id'")->result();
-            foreach($data_barang as $d)
-            {
+            foreach ($data_barang as $d) {
                 $stok = $d->stok;
-                $sisa = $stok+$jumlah_masuk;
+                $sisa = $stok + $jumlah_masuk;
 
                 $this->admin->insert('barang_masuk', $dataBrgMasuk);
-                $this->db->query("UPDATE barang SET stok='$sisa', masa_pakai='$masa_pakai' where id_barang='$barang_id'");
+                $this->db->query("UPDATE barang SET stok='$sisa' where id_barang='$barang_id'");
                 set_pesan('data berhasil disimpan.');
                 redirect('barangmasuk');
             }

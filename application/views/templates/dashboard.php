@@ -1,4 +1,4 @@
-<?php  
+<?php
 $query = "SELECT * FROM setting_app";
 $setting = $this->db->query($query)->row_array();
 ?>
@@ -51,179 +51,162 @@ $setting = $this->db->query($query)->row_array();
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center bg-white justify-content-center" href="dashboard.php">
 				<div class="sidebar-brand-icon mb-1">
-				<img src="<?= base_url('assets/img/logo/').$setting['logo'] ?>" alt="bpjamsostek" style="width: 185px; max-height: 185px; background-size: cover;">
+					<img src="<?= base_url('assets/img/logo/') . $setting['logo'] ?>" alt="bpjamsostek" style="width: 185px; max-height: 185px; background-size: cover;">
 				</div>
 			</a>
 
 			<!-- Nav Item - Dashboard -->
 			<div class="wrapper font-weight-bold">
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('dashboard'); ?>">
-					<i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard</span>
-				</a>
-			</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('dashboard'); ?>">
+						<i class="fas fa-fw fa-tachometer-alt"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
 
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
-			<!-- Heading -->
-			<div class="sidebar-heading">
-				Data Master
-			</div>
-
-			<!-- Nav Item - Dashboard -->
-			<li class="nav-item">
-				<a class="nav-link pb-0" href="<?= base_url('supplier'); ?>">
-					<i class="fas fa-fw fa-users"></i>
-					<span>Supplier</span>
-				</a>
-			</li>
-
-			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
-					<i class="fas fa-fw fa-folder"></i>
-					<span>Barang</span>
-				</a>
-				<div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-light py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Master Barang:</h6>
-						<a class="collapse-item" href="<?= base_url('jenis'); ?>">Jenis Barang</a>
-						<a class="collapse-item" href="<?= base_url('barang'); ?>">Data Barang</a>
-						<a class="collapse-item" href="<?= base_url('satuan'); ?>">Satuan Barang</a>
-						<a class="collapse-item" href="<?= base_url('penempatanbarang'); ?>">Penempatan Barang</a>
-					</div>
-				</div>
-			</li>
-
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
-			<!-- Heading -->
-			<div class="sidebar-heading">
-				Transaksi
-			</div>
-
-			<!-- Nav Item - Dashboard -->
-
-			<li class="nav-item">
-				<a class="nav-link pb-0" href="<?= base_url('masapakaibarang'); ?>">
-					<i class="fas fa-fw fa-download"></i>
-					<span>Masa Pakai Barang</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link pb-0" href="<?= base_url('barangrusak'); ?>">
-					<i class="fas fa-fw fa-download"></i>
-					<span>Barang Rusak</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link pb-0" href="<?= base_url('barangmaintenance'); ?>">
-					<i class="fas fa-fw fa-download"></i>
-					<span>Barang Maintenance</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link pb-0" href="<?= base_url('barangmasuk'); ?>">
-					<i class="fas fa-fw fa-download"></i>
-					<span>Barang Masuk</span>
-				</a>
-			</li>
-
-			<!-- Nav Item - Dashboard -->
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('barangkeluar'); ?>">
-					<i class="fas fa-fw fa-upload"></i>
-					<span>Barang Keluar</span>
-				</a>
-			</li>
-
-			<!-- Divider -->
-			<hr class="sidebar-divider">
-
-			<!-- Heading -->
-			<div class="sidebar-heading">
-				Reports
-			</div>
-
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('laporan'); ?>">
-					<i class="fas fa-fw fa-print"></i>
-					<span>Laporan</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('laporan/masapakai_brg'); ?>">
-					<i class="fas fa-fw fa-print"></i>
-					<span>Laporan Masa Pakai Brg</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('laporan/penempatanbarang'); ?>">
-					<i class="fas fa-fw fa-print"></i>
-					<span>Laporan Penempatan Brg</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('laporan/barangrusak'); ?>">
-					<i class="fas fa-fw fa-print"></i>
-					<span>Laporan Barang Rusak</span>
-				</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="<?= base_url('laporan/barangmaintenance'); ?>">
-					<i class="fas fa-fw fa-print"></i>
-					<span>Laporan Maintenance Brg</span>
-				</a>
-			</li>
-
-			<?php if (is_admin()) : ?>
 				<!-- Divider -->
 				<hr class="sidebar-divider">
 
 				<!-- Heading -->
 				<div class="sidebar-heading">
-					Settings
+					Data Master
+				</div>
+
+				<!-- Nav Item - Dashboard -->
+				<li class="nav-item">
+					<a class="nav-link pb-0" href="<?= base_url('supplier'); ?>">
+						<i class="fas fa-fw fa-users"></i>
+						<span>Supplier</span>
+					</a>
+				</li>
+
+				<?php if (is_admin()) : ?>
+					<li class="nav-item">
+						<a class="nav-link pb-0" href="<?= base_url('pegawai'); ?>">
+							<i class="fas fa-fw fa-user-tie"></i>
+							<span>Pegawai</span>
+						</a>
+					</li>
+				<?php endif; ?>
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#collapseMaster" aria-expanded="true" aria-controls="collapseMaster">
+						<i class="fas fa-fw fa-box"></i>
+						<span>Barang</span>
+					</a>
+					<div id="collapseMaster" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+						<div class="bg-light py-2 collapse-inner rounded">
+							<h6 class="collapse-header">Master Barang:</h6>
+							<a class="collapse-item" href="<?= base_url('jenis'); ?>">Jenis Barang</a>
+							<a class="collapse-item" href="<?= base_url('satuan'); ?>">Satuan Barang</a>
+							<a class="collapse-item" href="<?= base_url('barang'); ?>">Data Barang</a>
+							<a class="collapse-item" href="<?= base_url('ruanganbarang'); ?>">Ruangan</a>
+						</div>
+					</div>
+				</li>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+
+				<!-- Heading -->
+				<div class="sidebar-heading">
+					Transaction
 				</div>
 
 				<!-- Nav Item -->
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('user'); ?>">
-						<i class="fas fa-fw fa-user-plus"></i>
-						<span>User Management</span>
+					<a class="nav-link pb-0" href="<?= base_url('barangmasuk'); ?>">
+						<i class="fas fa-fw fa-download"></i>
+						<span>Barang Masuk</span>
 					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('SettingWeb'); ?>">
-						<!-- <i class="fas fa-fw fa-user-plus"></i> -->
-						<i class="fas fa-cogs"></i>
-						<span>Web Settings</span>
+					<a class="nav-link pb-0" href="<?= base_url('barangkeluar'); ?>">
+						<i class="fas fa-fw fa-upload"></i>
+						<span>Barang Keluar</span>
 					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('slider'); ?>">
-						<!-- <i class="fas fa-fw fa-user-plus"></i> -->
-						<i class="far fa-images"></i>
-						<span>Slider Dashboard</span>
+					<a class="nav-link pb-0" href="<?= base_url('penempatan'); ?>">
+						<i class="fas fa-fw fa-thumbtack"></i>
+						<span>Penempatan Barang</span>
 					</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link" href="<?= base_url('SettingWeb/visimisi'); ?>">
-						<!-- <i class="fas fa-fw fa-user-plus"></i> -->
-						<i class="fas fa-cogs"></i>
-						<span>Visi & Misi</span>
+					<a class="nav-link pb-0" href="<?= base_url('pengguna'); ?>">
+						<i class="fas fa-fw fa-hand-holding-usd"></i>
+						<span>Penunjukan Barang</span>
 					</a>
 				</li>
-			<?php endif; ?>
+
+				<li class="nav-item">
+					<a class="nav-link pb-0" href="<?= base_url('barangrusak'); ?>">
+						<i class="fas fa-fw fa-fire"></i>
+						<span>Barang Rusak</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link pb-0" href="<?= base_url('barangmaintenance'); ?>">
+						<i class="fas fa-fw fa-tools"></i>
+						<span>Barang Maintenance</span>
+					</a>
+				</li>
+
+				<!-- Divider -->
+				<hr class="sidebar-divider">
+				<!-- Laporan -->
+
+				<div class="sidebar-heading">
+					Reports
+				</div>
+
+				<!-- Nav Item - Pages Collapse Menu -->
+				<li class="nav-item">
+					<a class="nav-link pb-0" href="<?= base_url('laporan'); ?>">
+						<i class="fas fa-fw fa-book"></i>
+						<span>Laporan Barang</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="<?= base_url('laporan/penempatanbarang'); ?>">
+						<i class="fas fa-fw fa-book"></i>
+						<span>Laporan Penempatan</span>
+					</a>
+				</li>
+
+				<!-- Settings -->
+				<?php if (is_admin()) : ?>
+					<!-- Divider -->
+					<hr class="sidebar-divider">
+
+					<!-- Heading -->
+					<div class="sidebar-heading">
+						Settings
+					</div>
+
+					<!-- Nav Item - Utilities Collapse Menu -->
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+							<i class="fas fa-fw fa-cog"></i>
+							<span>Pengaturan</span>
+						</a>
+						<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+							<div class="bg-white py-2 collapse-inner rounded">
+								<h6 class="collapse-header">Pengaturan Web:</h6>
+								<a class="collapse-item" href="<?= base_url('user'); ?>">Manajemen User</a>
+								<a class="collapse-item" href="<?= base_url('SettingWeb'); ?>">Nama & Logo Web</a>
+								<a class="collapse-item" href="<?= base_url('slider'); ?>">Carousel</a>
+								<a class="collapse-item" href="<?= base_url('SettingWeb/visimisi'); ?>">Visi & Misi</a>
+							</div>
+						</div>
+					</li>
+				<?php endif; ?>
 			</div>
 
 			<!-- Divider -->
@@ -405,14 +388,15 @@ $setting = $this->db->query($query)->row_array();
 
 			cb(start, end);
 		});
-
 	</script>
 	<script type="text/javascript">
 		let hal = '<?= $this->uri->segment(1); ?>';
 
 		let satuan = $('#satuan');
+		let harga_barang = $('#harga_barang');
 		let stok = $('#stok');
 		let total = $('#total_stok');
+		let total_harga = $('#total_harga');
 		let jumlah = hal == 'barangmasuk' ? $('#jumlah_masuk') : $('#jumlah_keluar');
 
 		$(document).on('change', '#barang_id', function() {
@@ -420,6 +404,7 @@ $setting = $this->db->query($query)->row_array();
 			$.getJSON(url, function(data) {
 				satuan.html(data.nama_satuan);
 				stok.val(data.stok);
+				harga_barang.val(data.harga_barang);
 				total.val(data.stok);
 				jumlah.focus();
 			});
@@ -428,6 +413,11 @@ $setting = $this->db->query($query)->row_array();
 		$(document).on('keyup', '#jumlah_masuk', function() {
 			let totalStok = parseInt(stok.val()) + parseInt(this.value);
 			total.val(Number(totalStok));
+		});
+
+		$(document).on('keyup', '#jumlah_masuk', function() {
+			let totalHarga = parseInt(harga_barang.val()) * parseInt(this.value);
+			total_harga.val(Number(totalHarga));
 		});
 
 		$(document).on('keyup', '#jumlah_rusak', function() {
@@ -460,14 +450,14 @@ $setting = $this->db->query($query)->row_array();
 				// *     return: '1 234,56'
 				number = (number + '').replace(',', '').replace(' ', '');
 				var n = !isFinite(+number) ? 0 : +number,
-				prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-				sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-				dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-				s = '',
-				toFixedFix = function(n, prec) {
-					var k = Math.pow(10, prec);
-					return '' + Math.round(n * k) / k;
-				};
+					prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+					sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+					dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+					s = '',
+					toFixedFix = function(n, prec) {
+						var k = Math.pow(10, prec);
+						return '' + Math.round(n * k) / k;
+					};
 				// Fix for IE parseFloat(0.55).toFixed(0) = 0;
 				s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
 				if (s[0].length > 3) {
@@ -487,35 +477,35 @@ $setting = $this->db->query($query)->row_array();
 				data: {
 					labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
 					datasets: [{
-						label: "Total Barang Masuk",
-						lineTension: 0.3,
-						backgroundColor: "rgba(78, 115, 223, 0.05)",
-						borderColor: "rgba(78, 115, 223, 1)",
-						pointRadius: 3,
-						pointBackgroundColor: "rgba(78, 115, 223, 1)",
-						pointBorderColor: "rgba(78, 115, 223, 1)",
-						pointHoverRadius: 3,
-						pointHoverBackgroundColor: "#5a5c69",
-						pointHoverBorderColor: "#5a5c69",
-						pointHitRadius: 10,
-						pointBorderWidth: 2,
-						data: <?= json_encode($cbm); ?>,
-					},
-					{
-						label: "Total Barang Keluar",
-						lineTension: 0.3,
-						backgroundColor: "rgba(231, 74, 59, 0.05)",
-						borderColor: "#e74a3b",
-						pointRadius: 3,
-						pointBackgroundColor: "#e74a3b",
-						pointBorderColor: "#e74a3b",
-						pointHoverRadius: 3,
-						pointHoverBackgroundColor: "#5a5c69",
-						pointHoverBorderColor: "#5a5c69",
-						pointHitRadius: 10,
-						pointBorderWidth: 2,
-						data: <?= json_encode($cbk); ?>,
-					}
+							label: "Total Barang Masuk",
+							lineTension: 0.3,
+							backgroundColor: "rgba(78, 115, 223, 0.05)",
+							borderColor: "rgba(78, 115, 223, 1)",
+							pointRadius: 3,
+							pointBackgroundColor: "rgba(78, 115, 223, 1)",
+							pointBorderColor: "rgba(78, 115, 223, 1)",
+							pointHoverRadius: 3,
+							pointHoverBackgroundColor: "#5a5c69",
+							pointHoverBorderColor: "#5a5c69",
+							pointHitRadius: 10,
+							pointBorderWidth: 2,
+							data: <?= json_encode($cbm); ?>,
+						},
+						{
+							label: "Total Barang Keluar",
+							lineTension: 0.3,
+							backgroundColor: "rgba(231, 74, 59, 0.05)",
+							borderColor: "#e74a3b",
+							pointRadius: 3,
+							pointBackgroundColor: "#e74a3b",
+							pointBorderColor: "#e74a3b",
+							pointHoverRadius: 3,
+							pointHoverBackgroundColor: "#5a5c69",
+							pointHoverBorderColor: "#5a5c69",
+							pointHitRadius: 10,
+							pointBorderWidth: 2,
+							data: <?= json_encode($cbk); ?>,
+						}
 					],
 				},
 				options: {
@@ -615,26 +605,25 @@ $setting = $this->db->query($query)->row_array();
 		</script>
 	<?php endif; ?>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 			$('.owl-carousel').owlCarousel({
-				items:3,
-				loop:true,
-				margin:10,
-				autoplay:true,
-				autoplayTimeout:1500,
-				autoplayHoverPause:true
+				items: 3,
+				loop: true,
+				margin: 10,
+				autoplay: true,
+				autoplayTimeout: 1500,
+				autoplayHoverPause: true
 			});
 			$('.summernote').summernote({
 				toolbar: [
-				['style', ['style']],
-				['font', ['bold', 'underline', 'clear']],
-				['color', ['color']],
-				['para', ['ul', 'ol', 'paragraph']],
+					['style', ['style']],
+					['font', ['bold', 'underline', 'clear']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']],
 				]
 
 			});
 		});
-
 	</script>
 </body>
 

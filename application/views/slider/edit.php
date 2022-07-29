@@ -5,7 +5,7 @@
 				<div class="row">
 					<div class="col">
 						<h4 class="h5 align-middle m-0 font-weight-bold text-info">
-							Ubah Slider
+							Ubah Carousel
 						</h4>
 					</div>
 					<div class="col-auto">
@@ -22,7 +22,7 @@
 			</div>
 			<div class="card-body pb-2">
 				<?= $this->session->flashdata('pesan'); ?>
-				 <?= form_open_multipart('', [], ['id' => $slider['id']]); ?>
+				<?= form_open_multipart('', [], ['id' => $slider['id']]); ?>
 				<div class="row form-group">
 					<label class="col-md-3 text-md-right" for="foto">Logo</label>
 					<div class="col-md-9">

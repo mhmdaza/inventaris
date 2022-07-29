@@ -31,6 +31,13 @@
                     </div>
                 </div>
                 <div class="row form-group">
+                    <label class="col-md-3 text-md-right" for="harga_barang">Harga Barang</label>
+                    <div class="col-md-9">
+                        <input value="<?= set_value('harga_barang', $barang['harga_barang']); ?>" name="harga_barang" id="harga_barang" type="number" class="form-control" placeholder="Harga Barang...">
+                        <?= form_error('harga_barang', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="row form-group">
                     <label class="col-md-3 text-md-right" for="jenis_id">Jenis Barang</label>
                     <div class="col-md-9">
                         <div class="input-group">

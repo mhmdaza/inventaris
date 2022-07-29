@@ -30,7 +30,7 @@
                         <?= form_error('tgl_brg_rusak', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
-            
+
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="barang_id">Barang</label>
                     <div class="col-md-5">
@@ -38,9 +38,7 @@
                             <select name="barang_id" id="barang_id" class="custom-select">
                                 <option value="" selected disabled>Pilih Barang</option>
                                 <?php foreach ($barang as $b) : ?>
-                                <?php if($b['masa_pakai'] < date('Y-m-d') ) { ?>
                                     <option <?= $this->uri->segment(3) == $b['id_barang'] ? 'selected' : '';  ?> <?= set_select('barang_id', $b['id_barang']) ?> value="<?= $b['id_barang'] ?>"><?= $b['id_barang'] . ' | ' . $b['nama_barang'] ?></option>
-                                <?php } ?>
                                 <?php endforeach; ?>
                             </select>
                             <div class="input-group-append">
@@ -50,19 +48,17 @@
                         <?= form_error('barang_id', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
-
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="stok">Stok</label>
                     <div class="col-md-5">
                         <input readonly="readonly" id="stok" type="number" class="form-control">
                     </div>
                 </div>
-
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="jumlah_rusak">Jumlah Barang Rusak</label>
                     <div class="col-md-5">
                         <div class="input-group">
-                            <input value="<?= set_value('jumlah_rusak'); ?>" name="jumlah_rusak" id="jumlah_rusak" type="number" class="form-control" placeholder="Jumlah Masuk...">
+                            <input value="<?= set_value('jumlah_rusak'); ?>" name="jumlah_rusak" id="jumlah_rusak" type="number" class="form-control" placeholder="Jumlah Rusak...">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="satuan">Satuan</span>
                             </div>
@@ -70,14 +66,18 @@
                         <?= form_error('jumlah_rusak', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
-
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="total_stok">Sisa Stok</label>
                     <div class="col-md-5">
                         <input readonly="readonly" id="total_stok" type="number" class="form-control">
                     </div>
                 </div>
-
+                <div class="row form-group">
+                    <label class="col-md-4 text-md-right" for="deskripsi">Deskripsi</label>
+                    <div class="col-md-5">
+                        <input id="deskripsi" type="text" class="form-control" name="deskripsi">
+                    </div>
+                </div>
                 <div class="row form-group">
                     <div class="col offset-md-4">
                         <button type="submit" class="btn btn-info">Simpan</button>

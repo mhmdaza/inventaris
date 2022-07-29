@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                    Data User
+                    Data Pengguna
                 </h4>
             </div>
             <div class="col-auto">
@@ -13,7 +13,7 @@
                         <i class="fa fa-user-plus"></i>
                     </span>
                     <span class="text">
-                        Tambah User
+                        Tambah Data
                     </span>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                 $no = 1;
                 if ($users) :
                     foreach ($users as $user) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td>
@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                     <?php endforeach;
-                    else : ?>
+                else : ?>
                     <tr>
                         <td colspan="8" class="text-center">Silahkan tambahkan user baru</td>
                     </tr>

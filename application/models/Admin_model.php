@@ -27,86 +27,38 @@ class Admin_model extends CI_Model
     {
         return $this->db->delete($table, [$pk => $id]);
     }
-    
-    public function deleteData($table,$data)
+
+    public function deleteData($table, $data)
     {
-        $this->db->delete($table,$data);
+        $this->db->delete($table, $data);
     }
 
     public function getUsers($id)
     {
         /**
          * ID disini adalah untuk data yang tidak ingin ditampilkan. 
-         * Maksud saya disini adalah 
-         * tidak ingin menampilkan data user yang digunakan, 
-         * pada managemen data user
+         * Maksud saya disini adalah tidak ingin menampilkan data user yang digunakan, pada managemen data user
          */
         $this->db->where('id_user !=', $id);
         return $this->db->get('user')->result_array();
     }
 
-    public function getSupplier() {
-        $sql = ('SELECT * FROM `supplier` `s` JOIN `barang_masuk` `bm` ON `s`.`supplier_id` = `bm`.`id_supplier` ORDER BY `id_supplier`');
-        return $this->db->get('supplier s')->result_array();
+    public function getSupplier()
+    {
+        return $this->db->get('supplier')->result_array();
     }
 
-    public function getJenis() {
-        $sql = ('SELECT * FROM `jenis` `j` JOIN `barang` `b` ON `j`.`jenis_id` = `b`.`id_supplier` ORDER BY `id_supplier`');
-        return $this->db->get('jenis j')->result_array();
+    public function getPegawai()
+    {
+        return $this->db->get('pegawai')->result_array();
     }
-    
+
     public function getBarang()
     {
-        $this->db->join('penempatan_brg pb', 'pb.id_penempatan_brg = b.penempatan_id');
         $this->db->join('jenis j', 'b.jenis_id = j.id_jenis');
         $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
         $this->db->order_by('id_barang');
         return $this->db->get('barang b')->result_array();
-    }
-
-    function getCetakBarang($pilih){
-        return $this->db->query("SELECT b.*, j.nama_jenis, s.nama_satuan, pb.nama_penempatan from barang b join jenis j on j.id_jenis=b.jenis_id 
-                                 join satuan s on s.id_satuan=b.satuan_id join penempatan_brg pb on pb.id_penempatan_brg=b.penempatan_id
-                                 where b.penempatan_id='$pilih'")->result_array();
-    }
-
-    function getCetakMasaPakaiBarang($start_date,$end_date){
-        return $this->db->query("SELECT b.*, j.nama_jenis, s.nama_satuan, pb.nama_penempatan from barang b join jenis j on j.id_jenis=b.jenis_id 
-                                 join satuan s on s.id_satuan=b.satuan_id join penempatan_brg pb on pb.id_penempatan_brg=b.penempatan_id
-                                 where b.masa_pakai BETWEEN '$start_date' and '$end_date'")->result_array();
-    }
-
-    public function getBarangRusak()
-    {
-        $this->db->join('user u', 'u.id_user = br.user_id');
-        $this->db->join('barang b', 'b.id_barang = br.barang_id');
-        $this->db->join('jenis j', 'b.jenis_id = j.id_jenis');
-        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
-        $this->db->order_by('id_barang_rusak');
-        return $this->db->get('barang_rusak br')->result_array();
-    }
-
-    function getCetakBarangRusak($start_date,$end_date){
-        return $this->db->query("SELECT br.*, u.nama, b.nama_barang, s.nama_satuan from barang_rusak br join user u on u.id_user=br.user_id
-                                 join barang b on b.id_barang=br.barang_id join satuan s on s.id_satuan=b.satuan_id 
-                                 where br.tgl_brg_rusak BETWEEN '$start_date' and '$end_date'")->result_array();
-    }
-
-    public function getBarangMaintenance()
-    {
-        $this->db->join('user u', 'u.id_user = br.user_id');
-        $this->db->join('barang b', 'b.id_barang = br.barang_id');
-        $this->db->join('jenis j', 'b.jenis_id = j.id_jenis');
-        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
-        $this->db->order_by('id_barang_maintenance');
-        return $this->db->get('barang_maintenance br')->result_array();
-    }
-
-    function getCetakBarangMaintenance($pilih,$start_date,$end_date){
-        return $this->db->query("SELECT br.*, u.nama, b.nama_barang, s.nama_satuan from barang_maintenance br join user u on u.id_user=br.user_id
-                                 join barang b on b.id_barang=br.barang_id join satuan s on s.id_satuan=b.satuan_id 
-                                 where br.tgl_brg_maintenance BETWEEN '$start_date' and '$end_date' 
-                                 AND br.status_barang='$pilih'")->result_array();
     }
 
     public function getBarangMasuk($limit = null, $id_barang = null, $range = null)
@@ -136,9 +88,11 @@ class Admin_model extends CI_Model
     public function getBarangKeluar($limit = null, $id_barang = null, $range = null)
     {
         $this->db->select('*');
-        $this->db->join('user u', 'bk.user_id = u.id_user');
-        $this->db->join('barang b', 'bk.barang_id = b.id_barang');
-        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
+        $this->db->join('user', 'user.id_user = barang_keluar.user_id');
+        $this->db->join('barang', 'barang.id_barang = barang_keluar.barang_id');
+        $this->db->join('satuan', 'satuan.id_satuan = barang.satuan_id');
+        $this->db->join('ruangan', 'ruangan.id_ruangan = barang_keluar.ruangan_id');
+
         if ($limit != null) {
             $this->db->limit($limit);
         }
@@ -150,7 +104,74 @@ class Admin_model extends CI_Model
             $this->db->where('tanggal_keluar' . ' <=', $range['akhir']);
         }
         $this->db->order_by('id_barang_keluar', 'DESC');
-        return $this->db->get('barang_keluar bk')->result_array();
+        return $this->db->get('barang_keluar')->result_array();
+    }
+
+    public function getPenempatan($limit = null, $id_barang = null)
+    {
+        $this->db->select('*');
+        $this->db->join('barang', 'barang.id_barang = penempatan.barang_id');
+        $this->db->join('pegawai', 'pegawai.id_pegawai = penempatan.pegawai_id');
+        $this->db->join('satuan', 'satuan.id_satuan = barang.satuan_id');
+        $this->db->join('ruangan', 'ruangan.id_ruangan = penempatan.ruangan_id');
+
+        if ($limit != null) {
+            $this->db->limit($limit);
+        }
+        if ($id_barang != null) {
+            $this->db->where('id_barang', $id_barang);
+        }
+        $this->db->order_by('id_penempatan', 'DESC');
+        return $this->db->get('penempatan')->result_array();
+    }
+
+    public function getCetakPenempatan($pilih)
+    {
+        return $this->db->query("SELECT penempatan.*, barang.nama_barang, pegawai.nama_pegawai, satuan.nama_satuan, ruangan.nama_ruangan FROM penempatan JOIN barang ON barang.id_barang=penempatan.barang_id JOIN pegawai ON pegawai.id_pegawai=penempatan.pegawai_id JOIN satuan ON satuan.id_satuan=barang.satuan_id JOIN ruangan On ruangan.id_ruangan=penempatan.ruangan_id WHERE penempatan.ruangan_id='$pilih'")->result_array();
+    }
+
+    public function getPengguna()
+    {
+        $this->db->select('*');
+        $this->db->join('pegawai', 'pegawai.id_pegawai = pengguna_brg.pegawai_id');
+        $this->db->join('barang', 'barang.id_barang = pengguna_brg.barang_id');
+        $this->db->join('jenis', 'barang.jenis_id = jenis.id_jenis');
+
+        return $this->db->get('pengguna_brg')->result_array();
+    }
+
+    public function getBarangRusak()
+    {
+        $this->db->join('user u', 'u.id_user = br.user_id');
+        $this->db->join('barang b', 'b.id_barang = br.barang_id');
+        $this->db->join('jenis j', 'b.jenis_id = j.id_jenis');
+        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
+        $this->db->order_by('id_barang_rusak');
+        return $this->db->get('barang_rusak br')->result_array();
+    }
+
+    public function getBarangMaintenance()
+    {
+        $this->db->join('user u', 'u.id_user = br.user_id');
+        $this->db->join('barang b', 'b.id_barang = br.barang_id');
+        $this->db->join('jenis j', 'b.jenis_id = j.id_jenis');
+        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
+        $this->db->order_by('id_barang_maintenance');
+        return $this->db->get('barang_maintenance br')->result_array();
+    }
+
+    public function laporan($table, $mulai, $akhir)
+    {
+        $tgl = $table == 'barang_masuk' ? 'Barang Masuk' : 'Barang Keluar';
+        $this->db->where($tgl . ' >=', $mulai);
+        $this->db->where($tgl . ' <=', $akhir);
+        return $this->db->get($table)->result_array();
+    }
+
+    public function cekStok($id)
+    {
+        $this->db->join('satuan s', 'b.satuan_id=s.id_satuan');
+        return $this->db->get_where('barang b', ['id_barang' => $id])->row_array();
     }
 
     public function getMax($table, $field, $kode = null)
@@ -180,36 +201,8 @@ class Admin_model extends CI_Model
         return $this->db->get($table)->result_array();
     }
 
-    public function chartBarangMasuk($bulan)
-    {
-        $like = 'T-BM-' . date('y') . $bulan;
-        $this->db->like('id_barang_masuk', $like, 'after');
-        return count($this->db->get('barang_masuk')->result_array());
-    }
-
-    public function chartBarangKeluar($bulan)
-    {
-        $like = 'T-BK-' . date('y') . $bulan;
-        $this->db->like('id_barang_keluar', $like, 'after');
-        return count($this->db->get('barang_keluar')->result_array());
-    }
-
-    public function laporan($table, $mulai, $akhir)
-    {
-        $tgl = $table == 'barang_masuk' ? 'Barang Masuk' : 'Barang Keluar';
-        $this->db->where($tgl . ' >=', $mulai);
-        $this->db->where($tgl . ' <=', $akhir);
-        return $this->db->get($table)->result_array();
-    }
-
-    public function cekStok($id)
-    {
-        $this->db->join('satuan s', 'b.satuan_id=s.id_satuan');
-        return $this->db->get_where('barang b', ['id_barang' => $id])->row_array();
-    }
-
     public function getSetting()
     {
-	    return $this->db->get('setting_app')->row_array();
+        return $this->db->get('setting_app')->row_array();
     }
 }

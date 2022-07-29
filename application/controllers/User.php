@@ -17,7 +17,7 @@ class User extends CI_Controller
 
     public function index()
     {
-        $data['title'] = "User Management";
+        $data['title'] = "Manajemen Pengguna";
         $data['users'] = $this->admin->getUsers(userdata('id_user'));
         $this->template->load('templates/dashboard', 'user/data', $data);
     }

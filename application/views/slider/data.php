@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<h4 class="h5 align-middle m-0 font-weight-bold text-info">
-					Slider
+					Carousel
 				</h4>
 			</div>
 			<div class="col-auto">
@@ -13,7 +13,7 @@
 						<i class="fas fa-image"></i>
 					</span>
 					<span class="text">
-						Tambah Slider
+						Tambah Data
 					</span>
 				</a>
 			</div>
@@ -28,16 +28,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($slider as $key => $value): ?>
-					
+				<?php foreach ($slider as $key => $value) : ?>
+
 					<tr>
-						<td><img src="<?= base_url() ?>assets/img/slider/<?= $value['foto']; ?>" class="img-thumbnail" width="200px" ></td>
-						<td>                                
+						<td><img src="<?= base_url() ?>assets/img/slider/<?= $value['foto']; ?>" class="img-thumbnail" width="200px"></td>
+						<td>
 							<a href="<?= base_url('slider/edit/') . $value['id'] ?>" class="btn btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i>Edit</a>
 							<a onclick="return confirm('Yakin ingin menghapus data?')" href="<?= base_url('slider/hapus/') . $value['id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Hapus</a>
-						</tr>
-					<?php endforeach ?>
-				</tbody>
-			</table>
-		</div>
+					</tr>
+				<?php endforeach ?>
+			</tbody>
+		</table>
 	</div>
+</div>

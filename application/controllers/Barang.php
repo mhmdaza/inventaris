@@ -34,7 +34,6 @@ class Barang extends CI_Controller
             $data['title'] = "Barang";
             $data['jenis'] = $this->admin->get('jenis');
             $data['satuan'] = $this->admin->get('satuan');
-            $data['penempatanbrg'] = $this->admin->get('penempatan_brg');
 
             // Mengenerate ID Barang
             $kode_terakhir = $this->admin->getMax('barang', 'id_barang');
@@ -67,7 +66,6 @@ class Barang extends CI_Controller
             $data['title'] = "Barang";
             $data['jenis'] = $this->admin->get('jenis');
             $data['satuan'] = $this->admin->get('satuan');
-            $data['penempatanbrg'] = $this->admin->get('penempatan_brg');
             $data['barang'] = $this->admin->get('barang', ['id_barang' => $id]);
             $this->template->load('templates/dashboard', 'barang/edit', $data);
         } else {

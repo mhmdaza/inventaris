@@ -22,6 +22,7 @@ class Supplier extends CI_Controller
     private function _validasi()
     {
         $this->form_validation->set_rules('nama_supplier', 'Nama Supplier', 'required|trim');
+        $this->form_validation->set_rules('toko', 'Nama Toko', 'required|trim');
         $this->form_validation->set_rules('no_telp', 'Nomor Telepon', 'required|trim|numeric');
         $this->form_validation->set_rules('alamat', 'Alamat', 'required|trim');
     }

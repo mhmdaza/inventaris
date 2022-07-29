@@ -4,11 +4,11 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                    Data Jenis
+                    Data Pegawai
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('jenis/add') ?>" class="btn btn-sm btn-info btn-icon-split">
+                <a href="<?= base_url('pegawai/add') ?>" class="btn btn-sm btn-info btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
@@ -24,28 +24,38 @@
             <thead>
                 <tr>
                     <th>No. </th>
-                    <th>Nama Jenis</th>
+                    <th>Nama</th>
+                    <th>NIP</th>
+                    <th>Jabatan</th>
+                    <th>Alamat</th>
+                    <th>Telp</th>
+                    <th>TMT</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($jenis) :
-                    foreach ($jenis as $j) :
+                if ($pegawai) :
+                    foreach ($pegawai as $p) :
                 ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $j['nama_jenis']; ?></td>
+                            <td><?= $p['nip']; ?></td>
+                            <td><?= $p['nama_pegawai']; ?></td>
+                            <td><?= $p['jabatan']; ?></td>
+                            <td><?= $p['alamat']; ?></td>
+                            <td><?= $p['telp']; ?></td>
+                            <td><?= $p['tmt']; ?></td>
                             <td>
-                                <a href="<?= base_url('jenis/edit/') . $j['id_jenis'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
-                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('jenis/delete/') . $j['id_jenis'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="<?= base_url('pegawai/edit/') . $p['id_pegawai'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                                <a onclick="return confirm('Yakin ingin hapus?')" href="<?= base_url('pegawai/delete/') . $p['id_pegawai'] ?>" class="btn btn-danger btn-circle btn-sm"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="3" class="text-center">
+                        <td colspan="9" class="text-center">
                             Data Kosong
                         </td>
                     </tr>

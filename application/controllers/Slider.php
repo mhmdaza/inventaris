@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Slider extends CI_Controller {
+class Slider extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -31,7 +32,7 @@ class Slider extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = "Slider";
+		$data['title'] = "Pengaturan Carousel";
 		$data['slider'] = $this->admin->get('slider');
 
 		$this->template->load('templates/dashboard', 'slider/data', $data);
@@ -58,9 +59,8 @@ class Slider extends CI_Controller {
 				} else {
 					set_pesan('gagal menyimpan perubahan');
 				}
-				redirect('slider');                
+				redirect('slider');
 			}
-
 		}
 	}
 
@@ -71,57 +71,56 @@ class Slider extends CI_Controller {
 		$this->_config();
 		if ($this->form_validation->run() == false) {
 			$data['title'] = "Ubah Slider";
-			$data['slider'] = $this->admin->get('slider',['id'=>$id],'');
+			$data['slider'] = $this->admin->get('slider', ['id' => $id], '');
 
 			$this->template->load('templates/dashboard', 'slider/edit', $data);
 		} else {
 
-		   $input = $this->input->post(null, true);
-            if (empty($_FILES['foto']['name'])) {
-                redirect('slider');
-            } else {
-                if ($this->upload->do_upload('foto') == false) {
-                    echo $this->upload->display_errors();
-                    die;
-                } else {
-                    $old_image = FCPATH . '/assets/img/slider/' . $input['old_image'];
-                    if(file_exists($old_image)){
-                        if (!unlink($old_image)) {
-                            set_pesan('gagal hapus foto lama.');
-                            redirect('slider');
-                        }
-                    }
-                    // var_dump($input);  die;
-                    $dataInput['foto'] = $this->upload->data('file_name');
-                    $update = $this->admin->update('slider', 'id', $input['id'], $dataInput);
-                    if ($update) {
-                        set_pesan('perubahan berhasil disimpan.');
-                    } else {
-                        set_pesan('gagal menyimpan perubahan');
-                    }
-                    redirect('slider');
-                }
-            }
-
+			$input = $this->input->post(null, true);
+			if (empty($_FILES['foto']['name'])) {
+				redirect('slider');
+			} else {
+				if ($this->upload->do_upload('foto') == false) {
+					echo $this->upload->display_errors();
+					die;
+				} else {
+					$old_image = FCPATH . '/assets/img/slider/' . $input['old_image'];
+					if (file_exists($old_image)) {
+						if (!unlink($old_image)) {
+							set_pesan('gagal hapus foto lama.');
+							redirect('slider');
+						}
+					}
+					// var_dump($input);  die;
+					$dataInput['foto'] = $this->upload->data('file_name');
+					$update = $this->admin->update('slider', 'id', $input['id'], $dataInput);
+					if ($update) {
+						set_pesan('perubahan berhasil disimpan.');
+					} else {
+						set_pesan('gagal menyimpan perubahan');
+					}
+					redirect('slider');
+				}
+			}
 		}
 	}
 
 	public function hapus($id)
 	{
 		$id = encode_php_tags($id);
-		$slider = $this->admin->get('slider',['id'=>$id],'');
-        if ($this->admin->delete('slider', 'id', $id)) {
-        	$old_image = FCPATH . '/assets/img/slider/' . $slider['foto'];
-                    if(file_exists($old_image)){
-                        if (!unlink($old_image)) {
-                            set_pesan('gagal hapus foto lama.');
-                            redirect('slider');
-                        }
-                    }
-            set_pesan('data berhasil dihapus.');
-        } else {
-            set_pesan('data gagal dihapus.', false);
-        }
-        redirect('slider');
+		$slider = $this->admin->get('slider', ['id' => $id], '');
+		if ($this->admin->delete('slider', 'id', $id)) {
+			$old_image = FCPATH . '/assets/img/slider/' . $slider['foto'];
+			if (file_exists($old_image)) {
+				if (!unlink($old_image)) {
+					set_pesan('gagal hapus foto lama.');
+					redirect('slider');
+				}
+			}
+			set_pesan('data berhasil dihapus.');
+		} else {
+			set_pesan('data gagal dihapus.', false);
+		}
+		redirect('slider');
 	}
 }

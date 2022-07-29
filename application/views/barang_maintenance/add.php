@@ -30,7 +30,7 @@
                         <?= form_error('tgl_brg_maintenance', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
-            
+
                 <div class="row form-group">
                     <label class="col-md-4 text-md-right" for="barang_id">Barang</label>
                     <div class="col-md-5">
@@ -60,7 +60,7 @@
                     <label class="col-md-4 text-md-right" for="jumlah_maintenance">Jumlah Barang Maintenance</label>
                     <div class="col-md-5">
                         <div class="input-group">
-                            <input value="<?= set_value('jumlah_maintenance'); ?>" name="jumlah_maintenance" id="jumlah_maintenance" type="number" class="form-control" placeholder="Jumlah Masuk...">
+                            <input value="<?= set_value('jumlah_maintenance'); ?>" name="jumlah_maintenance" id="jumlah_maintenance" type="number" class="form-control" placeholder="Jumlah Maintenance...">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="satuan">Satuan</span>
                             </div>

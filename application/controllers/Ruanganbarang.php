@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Penempatanbarang extends CI_Controller
+class Ruanganbarang extends CI_Controller
 {
     public function __construct()
     {
@@ -14,31 +14,31 @@ class Penempatanbarang extends CI_Controller
 
     public function index()
     {
-        $data['title'] = "Penempatan Barang";
-        $data['penempatanbarang'] = $this->admin->get('penempatan_brg');
-        $this->template->load('templates/dashboard', 'penempatan_brg/data', $data);
+        $data['title'] = "Ruangan";
+        $data['ruanganbarang'] = $this->admin->get('ruangan');
+        $this->template->load('templates/dashboard', 'ruangan_brg/data', $data);
     }
 
     private function _validasi()
     {
-        $this->form_validation->set_rules('nama_penempatan', 'Nama Penempatan', 'required');
+        $this->form_validation->set_rules('nama_ruangan', 'Nama ruangan', 'required');
     }
 
     public function add()
     {
         $this->_validasi();
         if ($this->form_validation->run() == false) {
-            $data['title'] = "Penempatan Barang";
-            $this->template->load('templates/dashboard', 'penempatan_brg/add', $data);
+            $data['title'] = "Ruangan";
+            $this->template->load('templates/dashboard', 'ruangan_brg/add', $data);
         } else {
             $input = $this->input->post(null, true);
-            $save = $this->admin->insert('penempatan_brg', $input);
+            $save = $this->admin->insert('ruangan', $input);
             if ($save) {
                 set_pesan('data berhasil disimpan.');
-                redirect('penempatanbarang');
+                redirect('ruanganbarang');
             } else {
                 set_pesan('data gagal disimpan', false);
-                redirect('penempatanbarang/add');
+                redirect('ruanganbarang/add');
             }
         }
     }
@@ -50,19 +50,19 @@ class Penempatanbarang extends CI_Controller
         $this->_validasi();
 
         if ($this->form_validation->run() == false) {
-            $data['title'] = "Penempatan Barang";
-            $data['penempatanbarang'] = $this->admin->get('penempatan_brg', ['id_penempatan_brg' => $id]);
-            $this->template->load('templates/dashboard', 'penempatan_brg/edit', $data);
+            $data['title'] = "Ruangan";
+            $data['ruanganbarang'] = $this->admin->get('ruangan', ['id_ruangan' => $id]);
+            $this->template->load('templates/dashboard', 'ruangan_brg/edit', $data);
         } else {
             $input = $this->input->post(null, true);
-            $update = $this->admin->update('penempatan_brg', 'id_penempatan_brg', $id, $input);
+            $update = $this->admin->update('ruangan', 'id_ruangan', $id, $input);
 
             if ($update) {
                 set_pesan('data berhasil diedit.');
-                redirect('penempatanbarang');
+                redirect('ruanganbarang');
             } else {
                 set_pesan('data gagal diedit.');
-                redirect('penempatanbarang/edit/' . $id);
+                redirect('ruanganbarang/edit/' . $id);
             }
         }
     }
@@ -70,11 +70,11 @@ class Penempatanbarang extends CI_Controller
     public function delete($getId)
     {
         $id = encode_php_tags($getId);
-        if ($this->admin->delete('penempatan_brg', 'id_penempatan_brg', $id)) {
+        if ($this->admin->delete('ruangan', 'id_ruangan', $id)) {
             set_pesan('data berhasil dihapus.');
         } else {
             set_pesan('data gagal dihapus.', false);
         }
-        redirect('penempatanbarang');
+        redirect('ruanganbarang');
     }
 }

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                    Laporan Data Barang Rusak
+                    Data Penempatan Barang
                 </h4>
             </div>
             <div class="col-auto">
@@ -24,27 +24,30 @@
             <thead>
                 <tr>
                     <th>No. </th>
+                    <th>ID Transaksi</th>
                     <th>Tanggal</th>
+                    <th>Penerima</th>
+                    <th>Ruangan</th>
+                    <th>ID Barang</th>
                     <th>Nama Barang</th>
-                    <th>Jumlah Rusak</th>
-                    <th>User</th>
-                    <th>Status</th>
+                    <th>Jumlah</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($barangrusak) :
-                    foreach ($barangrusak as $br) :
-                        ?>
+                if ($penempatan) :
+                    foreach ($penempatan as $p) :
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $br['tgl_brg_rusak']; ?></td>
-                            <td><?= $br['nama_barang']; ?></td>
-                            <td><?= $br['jumlah_rusak'] . ' ' . $br['nama_satuan']; ?></td>
-                            <td><?= $br['nama']; ?></td>
-                            <td><div class="badge badge-xs badge-danger"><?= $br['status_barang']; ?></div></td>
-                            
+                            <td><?= $p['id_penempatan']; ?></td>
+                            <td><?= $p['tgl_penempatan']; ?></td>
+                            <td><?= $p['nama_pegawai']; ?></td>
+                            <td><?= $p['nama_ruangan']; ?></td>
+                            <td><?= $p['id_barang']; ?></td>
+                            <td><?= $p['nama_barang']; ?></td>
+                            <td><?= $p['jumlah_penempatan'] . ' ' . $p['nama_satuan']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
@@ -67,24 +70,24 @@
                 <h4 class="modal-title" id="myModalLabel">Cetak Data</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
             </div>
-            <?= form_open('laporan/cetak_barangrusak'); ?>
-              <div class="modal-body">
-        
-                <div class="form-group">
-                    <label>Start Date</label>
-                    <input type="date" class="form-control" name="start_date" required>
-                </div>
+            <?= form_open('laporan/cetak_penempatan'); ?>
+            <div class="modal-body">
 
                 <div class="form-group">
-                    <label>End Date</label>
-                    <input type="date" class="form-control" name="end_date" required>
+                    <label>Pilih Ruangan</label>
+                    <select name="pilih" class="form-control" required>
+                        <option value="" hidden="">-- Pilih Ruangan --</option>
+                        <?php foreach ($ruangan as $r) { ?>
+                            <option value="<?php echo $r['id_ruangan'] ?>"><?php echo $r['nama_ruangan'] ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
-              
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
-              </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-undo"></i> Close</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+            </div>
             <?= form_close(); ?>
         </div>
     </div>

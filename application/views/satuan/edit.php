@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col">
                         <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                            Form Edit Satuan
+                            Form Edit Satuan Barang
                         </h4>
                     </div>
                     <div class="col-auto">

@@ -38,20 +38,10 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-3 text-md-right" for="penempatan_id">Penempatan Barang</label>
+                    <label class="col-md-3 text-md-right" for="harga_barang">Harga Barang</label>
                     <div class="col-md-9">
-                        <div class="input-group">
-                            <select name="penempatan_id" id="penempatan_id" class="custom-select">
-                                <option value="" selected disabled>Pilih Penempatan Barang</option>
-                                <?php foreach ($penempatanbrg as $d) : ?>
-                                    <option <?= set_select('penempatan_id', $d['id_penempatan_brg']) ?> value="<?= $d['id_penempatan_brg'] ?>"><?= $d['nama_penempatan'] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="input-group-append">
-                                <a class="btn btn-info" href="<?= base_url('penempatanbarang/add'); ?>"><i class="fa fa-plus"></i></a>
-                            </div>
-                        </div>
-                        <?= form_error('jenis_id', '<small class="text-danger">', '</small>'); ?>
+                        <input value="<?= set_value('harga_barang'); ?>" name="harga_barang" id="harga_barang" type="number" class="form-control" placeholder="Harga Barang...">
+                        <?= form_error('harga_barang', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="row form-group">

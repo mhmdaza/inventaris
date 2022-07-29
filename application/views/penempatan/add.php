@@ -5,11 +5,11 @@
                 <div class="row">
                     <div class="col">
                         <h4 class="h5 align-middle m-0 font-weight-bold text-info">
-                            Form Input Barang Keluar Habis Pakai
+                            Form Input Penempatan Barang
                         </h4>
                     </div>
                     <div class="col-auto">
-                        <a href="<?= base_url('barangkeluar') ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                        <a href="<?= base_url('penempatan') ?>" class="btn btn-sm btn-secondary btn-icon-split">
                             <span class="icon">
                                 <i class="fa fa-arrow-left"></i>
                             </span>
@@ -22,19 +22,36 @@
             </div>
             <div class="card-body">
                 <?= $this->session->flashdata('pesan'); ?>
-                <?= form_open('', [], ['id_barang_keluar' => $id_barang_keluar, 'user_id' => $this->session->userdata('login_session')['user']]); ?>
+                <?= form_open('', [], ['id_penempatan' => $id_penempatan]); ?>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="id_barang_keluar">ID Transaksi Barang Keluar</label>
+                    <label class="col-md-4 text-md-right" for="id_penempatan">ID Transaksi Penempatan</label>
                     <div class="col-md-4">
-                        <input value="<?= $id_barang_keluar; ?>" type="text" readonly="readonly" class="form-control">
-                        <?= form_error('id_barang_keluar', '<small class="text-danger">', '</small>'); ?>
+                        <input value="<?= $id_penempatan; ?>" type="text" readonly="readonly" class="form-control">
+                        <?= form_error('id_penempatan', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="tanggal_keluar">Tanggal Keluar</label>
+                    <label class="col-md-4 text-md-right" for="tgl_penempatan">Tanggal Penempatan</label>
                     <div class="col-md-4">
-                        <input value="<?= set_value('tanggal_keluar', date('Y-m-d')); ?>" name="tanggal_keluar" id="tanggal_keluar" type="text" class="form-control date" placeholder="Tanggal Masuk...">
-                        <?= form_error('tanggal_keluar', '<small class="text-danger">', '</small>'); ?>
+                        <input value="<?= set_value('tgl_penempatan', date('Y-m-d')); ?>" name="tgl_penempatan" id="tgl_penempatan" type="text" class="form-control date" placeholder="Tanggal Penempatan...">
+                        <?= form_error('tgl_penempatan', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-4 text-md-right" for="pegawai_id">Penerima Barang</label>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <select name="pegawai_id" id="pegawai_id" class="custom-select">
+                                <option value="" selected disabled>Pilih Pegawai</option>
+                                <?php foreach ($pegawai as $p) : ?>
+                                    <option value="<?= $p['id_pegawai'] ?>"><?= $p['nama_pegawai'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <div class="input-group-append">
+                                <a class="btn btn-info" href="<?= base_url('pegawai/add'); ?>"><i class="fa fa-plus"></i></a>
+                            </div>
+                        </div>
+                        <?= form_error('pegawai_id', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -48,14 +65,14 @@
                                 <?php endforeach; ?>
                             </select>
                             <div class="input-group-append">
-                                <a class="btn btn-info" href="<?= base_url('ruangan/add'); ?>"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-info" href="<?= base_url('ruanganbarang/add'); ?>"><i class="fa fa-plus"></i></a>
                             </div>
                         </div>
                         <?= form_error('ruangan_id', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="barang_id">Barang</label>
+                    <label class="col-md-4 text-md-right" for="barang_id">Nama Barang</label>
                     <div class="col-md-5">
                         <div class="input-group">
                             <select name="barang_id" id="barang_id" class="custom-select">
@@ -78,21 +95,15 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="jumlah_keluar">Jumlah Keluar</label>
+                    <label class="col-md-4 text-md-right" for="jumlah_penempatan">Jumlah</label>
                     <div class="col-md-5">
                         <div class="input-group">
-                            <input value="<?= set_value('jumlah_keluar'); ?>" name="jumlah_keluar" id="jumlah_keluar" type="number" class="form-control" placeholder="Jumlah Keluar...">
+                            <input value="<?= set_value('jumlah_penempatan'); ?>" name="jumlah_penempatan" id="jumlah_penempatan" type="number" class="form-control" placeholder="Jumlah Barang...">
                             <div class="input-group-append">
                                 <span class="input-group-text" id="satuan">Satuan</span>
                             </div>
                         </div>
-                        <?= form_error('jumlah_keluar', '<small class="text-danger">', '</small>'); ?>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="total_stok">Total Stok</label>
-                    <div class="col-md-5">
-                        <input readonly="readonly" id="total_stok" type="number" class="form-control">
+                        <?= form_error('jumlah_penempatan', '<small class="text-danger">', '</small>'); ?>
                     </div>
                 </div>
                 <div class="row form-group">

@@ -72,10 +72,9 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-md-4 text-md-right" for="masa_pakai">Masa Pakai Barang</label>
-                    <div class="col-md-4">
-                        <input value="<?= set_value('masa_pakai', date('Y-m-d')); ?>" name="masa_pakai" id="masa_pakai" type="text" class="form-control date" placeholder="Masa Pakai Barang...">
-                        <?= form_error('masa_pakai', '<small class="text-danger">', '</small>'); ?>
+                    <label class="col-md-4 text-md-right" for="harga_barang">Harga</label>
+                    <div class="col-md-5">
+                        <input readonly="readonly" id="harga_barang" type="number" class="form-control">
                     </div>
                 </div>
                 <div class="row form-group">
@@ -100,6 +99,12 @@
                     <label class="col-md-4 text-md-right" for="total_stok">Total Stok</label>
                     <div class="col-md-5">
                         <input readonly="readonly" id="total_stok" type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-md-4 text-md-right" for="total_harga">Total Harga</label>
+                    <div class="col-md-5">
+                        <input readonly="readonly" id="total_harga" name="total_harga" type="number" class="form-control">
                     </div>
                 </div>
                 <div class="row form-group">

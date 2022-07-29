@@ -13,7 +13,7 @@
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Tambah Supplier
+                        Tambah Data
                     </span>
                 </a>
             </div>
@@ -25,6 +25,7 @@
                 <tr>
                     <th>No.</th>
                     <th>Nama</th>
+                    <th>Nama Toko</th>
                     <th>Nomor Telepon</th>
                     <th>Alamat</th>
                     <th>Aksi</th>
@@ -35,10 +36,11 @@
                 if ($supplier) :
                     $no = 1;
                     foreach ($supplier as $s) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= $s['nama_supplier']; ?></td>
+                            <td><?= $s['toko']; ?></td>
                             <td><?= $s['no_telp']; ?></td>
                             <td><?= $s['alamat']; ?></td>
                             <th>

@@ -36,6 +36,18 @@
                     </div>
                 </div>
                 <div class="row form-group">
+                    <label class="col-md-3 text-md-right" for="no_telp">Nama Toko</label>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-fw fa-building"></i></span>
+                            </div>
+                            <input value="<?= set_value('toko'); ?>" name="toko" id="toko" type="text" class="form-control" placeholder="Nama Toko...">
+                        </div>
+                        <?= form_error('toko', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="row form-group">
                     <label class="col-md-3 text-md-right" for="no_telp">Nomor Telepon</label>
                     <div class="col-md-9">
                         <div class="input-group">

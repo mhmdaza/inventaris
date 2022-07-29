@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2022 at 04:32 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Generation Time: Jul 25, 2022 at 03:36 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,26 +31,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `barang` (
   `id_barang` char(7) NOT NULL,
   `nama_barang` varchar(255) NOT NULL,
+  `harga_barang` bigint(20) NOT NULL,
   `stok` int(11) NOT NULL,
-  `penempatan_id` int(11) NOT NULL,
   `satuan_id` int(11) NOT NULL,
-  `jenis_id` int(11) NOT NULL,
-  `masa_pakai` date DEFAULT NULL
+  `jenis_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `penempatan_id`, `satuan_id`, `jenis_id`, `masa_pakai`) VALUES
-('B000001', 'Lenovo Ideapad 1550', 19, 2, 1, 3, '2022-06-13'),
-('B000002', 'Samsung Galaxy J1 Ace', 47, 2, 1, 4, '2022-06-06'),
-('B000004', 'Mouse Wireless Logitech M220', 32, 3, 1, 7, '2022-06-08'),
-('B000005', 'Asus X454WA', 3, 3, 1, 3, '2022-06-08'),
-('B000006', 'HP LaserJet Pro M12w', 8, 4, 1, 8, '2022-06-08'),
-('B000007', 'SSD', 10, 3, 1, 3, '2022-06-08'),
-('B000008', 'Hardisk', 10, 3, 1, 3, '2023-06-08'),
-('B000009', 'CPU', 0, 2, 1, 7, '2022-06-08');
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga_barang`, `stok`, `satuan_id`, `jenis_id`) VALUES
+('B000001', 'ASUS X455WA', 3600000, 5, 1, 3),
+('B000002', 'Faber-Castell', 2100, 20, 2, 15);
 
 -- --------------------------------------------------------
 
@@ -59,24 +53,27 @@ INSERT INTO `barang` (`id_barang`, `nama_barang`, `stok`, `penempatan_id`, `satu
 
 CREATE TABLE `barang_keluar` (
   `id_barang_keluar` char(16) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `barang_id` char(7) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `jumlah_keluar` int(11) NOT NULL,
-  `tanggal_keluar` date NOT NULL
+  `tanggal_keluar` date NOT NULL,
+  `ruangan_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `barang_keluar`
 --
 
-INSERT INTO `barang_keluar` (`id_barang_keluar`, `user_id`, `barang_id`, `jumlah_keluar`, `tanggal_keluar`) VALUES
-('T-BK-19082000002', 1, 'B000002', 10, '2019-08-20'),
-('T-BK-19092000003', 1, 'B000001', 5, '2019-09-20'),
-('T-BK-19092000005', 1, 'B000004', 10, '2019-09-20');
+INSERT INTO `barang_keluar` (`id_barang_keluar`, `barang_id`, `user_id`, `jumlah_keluar`, `tanggal_keluar`, `ruangan_id`) VALUES
+('T-BK-22071900001', 'B000002', 1, 12, '2022-07-19', 8);
 
 --
 -- Triggers `barang_keluar`
 --
+DELIMITER $$
+CREATE TRIGGER `delete_stok_keluar` AFTER DELETE ON `barang_keluar` FOR EACH ROW UPDATE `barang` SET `barang`.`stok` = `barang`.`stok` + OLD.jumlah_keluar WHERE `barang`.`id_barang` = OLD.barang_id
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `update_stok_keluar` BEFORE INSERT ON `barang_keluar` FOR EACH ROW UPDATE `barang` SET `barang`.`stok` = `barang`.`stok` - NEW.jumlah_keluar WHERE `barang`.`id_barang` = NEW.barang_id
 $$
@@ -102,11 +99,7 @@ CREATE TABLE `barang_maintenance` (
 --
 
 INSERT INTO `barang_maintenance` (`id_barang_maintenance`, `barang_id`, `user_id`, `tgl_brg_maintenance`, `jumlah_maintenance`, `status_barang`) VALUES
-(1, 'B000001', 1, '2022-06-06', 2, 'Selesai'),
-(2, 'B000004', 1, '2022-06-07', 2, 'Selesai'),
-(3, 'B000001', 1, '2022-06-07', 2, 'Maintenance'),
-(4, 'B000006', 1, '2022-06-07', 2, 'Maintenance'),
-(5, 'B000005', 1, '2022-06-07', 1, 'Selesai');
+(1, 'B000001', 1, '2022-07-17', 1, 'Maintenance');
 
 -- --------------------------------------------------------
 
@@ -120,15 +113,18 @@ CREATE TABLE `barang_masuk` (
   `user_id` int(11) NOT NULL,
   `barang_id` char(7) NOT NULL,
   `jumlah_masuk` int(11) NOT NULL,
-  `tanggal_masuk` date NOT NULL
+  `tanggal_masuk` date NOT NULL,
+  `total_harga` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `barang_masuk`
 --
 
-INSERT INTO `barang_masuk` (`id_barang_masuk`, `supplier_id`, `user_id`, `barang_id`, `jumlah_masuk`, `tanggal_masuk`) VALUES
-('T-BM-22060700001', 4, 1, 'B000001', 1, '2022-06-13');
+INSERT INTO `barang_masuk` (`id_barang_masuk`, `supplier_id`, `user_id`, `barang_id`, `jumlah_masuk`, `tanggal_masuk`, `total_harga`) VALUES
+('T-BM-22071500001', 4, 1, 'B000001', 5, '2022-07-15', 18000000),
+('T-BM-22071800001', 4, 1, 'B000001', 5, '2022-07-18', 18000000),
+('T-BM-22071900001', 6, 1, 'B000002', 20, '2022-07-19', 42000);
 
 --
 -- Triggers `barang_masuk`
@@ -150,6 +146,7 @@ CREATE TABLE `barang_rusak` (
   `user_id` int(11) NOT NULL,
   `tgl_brg_rusak` date NOT NULL,
   `jumlah_rusak` int(11) NOT NULL,
+  `deskripsi` varchar(128) NOT NULL,
   `status_barang` enum('Rusak') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -157,9 +154,8 @@ CREATE TABLE `barang_rusak` (
 -- Dumping data for table `barang_rusak`
 --
 
-INSERT INTO `barang_rusak` (`id_barang_rusak`, `barang_id`, `user_id`, `tgl_brg_rusak`, `jumlah_rusak`, `status_barang`) VALUES
-(8, 'B000002', 1, '2022-06-06', 2, 'Rusak'),
-(9, 'B000006', 1, '2022-06-07', 2, 'Rusak');
+INSERT INTO `barang_rusak` (`id_barang_rusak`, `barang_id`, `user_id`, `tgl_brg_rusak`, `jumlah_rusak`, `deskripsi`, `status_barang`) VALUES
+(5, 'B000001', 1, '2022-07-17', 1, 'Layar Pecah', 'Rusak');
 
 -- --------------------------------------------------------
 
@@ -178,31 +174,116 @@ CREATE TABLE `jenis` (
 
 INSERT INTO `jenis` (`id_jenis`, `nama_jenis`) VALUES
 (3, 'Laptop'),
-(4, 'Handphone'),
 (6, 'Layar Projector'),
 (7, 'Perangkat Komputer'),
 (8, 'Printer'),
-(9, 'Paper Shredder');
+(9, 'Paper Shredder'),
+(10, 'Speaker'),
+(11, 'Mesin Antrian'),
+(12, 'Microphone'),
+(13, 'Lemari Arsip'),
+(14, 'Meja'),
+(15, 'ATK');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penempatan_brg`
+-- Table structure for table `pegawai`
 --
 
-CREATE TABLE `penempatan_brg` (
-  `id_penempatan_brg` int(11) NOT NULL,
-  `nama_penempatan` varchar(255) NOT NULL
+CREATE TABLE `pegawai` (
+  `id_pegawai` int(11) NOT NULL,
+  `nip` varchar(20) NOT NULL,
+  `nama_pegawai` varchar(128) NOT NULL,
+  `jabatan` varchar(128) NOT NULL,
+  `alamat` varchar(128) NOT NULL,
+  `telp` varchar(128) NOT NULL,
+  `tmt` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pegawai`
+--
+
+INSERT INTO `pegawai` (`id_pegawai`, `nip`, `nama_pegawai`, `jabatan`, `alamat`, `telp`, `tmt`) VALUES
+(11, '131149868', 'Agus Sutejo', 'Kepala Kantor', 'Jalan Tambun Bungai', '089127781001', '2016-07-17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penempatan`
+--
+
+CREATE TABLE `penempatan` (
+  `id_penempatan` char(12) CHARACTER SET utf8 NOT NULL,
+  `tgl_penempatan` date NOT NULL,
+  `barang_id` char(7) CHARACTER SET utf8 NOT NULL,
+  `pegawai_id` int(11) NOT NULL,
+  `jumlah_penempatan` int(11) NOT NULL,
+  `ruangan_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `penempatan`
+--
+
+INSERT INTO `penempatan` (`id_penempatan`, `tgl_penempatan`, `barang_id`, `pegawai_id`, `jumlah_penempatan`, `ruangan_id`) VALUES
+('T-PB-2207170', '2022-07-17', 'B000001', 11, 3, 12);
+
+--
+-- Triggers `penempatan`
+--
+DELIMITER $$
+CREATE TRIGGER `delete_stok_penempatan` AFTER DELETE ON `penempatan` FOR EACH ROW UPDATE `barang` SET `barang`.`stok` = `barang`.`stok` + OLD.jumlah_penempatan WHERE `barang`.`id_barang` = OLD.barang_id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_stok_penempatan` BEFORE INSERT ON `penempatan` FOR EACH ROW UPDATE `barang` SET `barang`.`stok` = `barang`.`stok` - NEW.jumlah_penempatan WHERE `barang`.`id_barang` = NEW.barang_id
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengguna_brg`
+--
+
+CREATE TABLE `pengguna_brg` (
+  `id_pengguna` int(11) NOT NULL,
+  `pegawai_id` int(11) NOT NULL,
+  `barang_id` char(7) CHARACTER SET utf8 NOT NULL,
+  `jenis_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengguna_brg`
+--
+
+INSERT INTO `pengguna_brg` (`id_pengguna`, `pegawai_id`, `barang_id`, `jenis_id`) VALUES
+(7, 11, 'B000001', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ruangan`
+--
+
+CREATE TABLE `ruangan` (
+  `id_ruangan` int(11) NOT NULL,
+  `nama_ruangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `penempatan_brg`
+-- Dumping data for table `ruangan`
 --
 
-INSERT INTO `penempatan_brg` (`id_penempatan_brg`, `nama_penempatan`) VALUES
-(2, 'Rak 1'),
-(3, 'Rak 2'),
-(4, 'Rak 3');
+INSERT INTO `ruangan` (`id_ruangan`, `nama_ruangan`) VALUES
+(7, 'Ruang Pegawai'),
+(8, 'Ruang Arsip'),
+(9, 'Ruang Resepsionis'),
+(10, 'Ruang Rapat'),
+(12, 'Ruang Kerja Atasan'),
+(14, 'Gudang');
 
 -- --------------------------------------------------------
 
@@ -220,7 +301,8 @@ CREATE TABLE `satuan` (
 --
 
 INSERT INTO `satuan` (`id_satuan`, `nama_satuan`) VALUES
-(1, 'Unit');
+(1, 'Unit'),
+(2, 'Buah');
 
 -- --------------------------------------------------------
 
@@ -233,8 +315,8 @@ CREATE TABLE `setting_app` (
   `nama` varchar(225) DEFAULT NULL,
   `logo` varchar(225) DEFAULT NULL,
   `is_active` varchar(1) DEFAULT NULL,
-  `visi` longtext DEFAULT NULL,
-  `misi` longtext DEFAULT NULL
+  `visi` longtext,
+  `misi` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -242,7 +324,7 @@ CREATE TABLE `setting_app` (
 --
 
 INSERT INTO `setting_app` (`id`, `nama`, `logo`, `is_active`, `visi`, `misi`) VALUES
-(1, 'BPJAMSOSTEK', 'fd9b813dfe6e519760da4252669d9467.png', '1', '<p><span xss=removed>Mewujudkan Jaminan Sosial Ketenagakerjaan yang Terpercaya, Berkelanjutan dan Menyejahterakan Seluruh Pekerja Indonesia</span><br></p>', '<p><span xss=removed>-</span><b> </b><span xss=removed>Melindungi, Melayani & Menyejahterakan Pekerja dan Keluarga</span></p><p><span xss=removed>- </span><span xss=removed>Memberikan rasa Aman, Mudah & Nyaman untuk Meningkatkan Produktivitas dan Daya Saing Peserta</span></p><p><span xss=removed>- </span><span xss=removed>Memberikan Kontribusi dalam Pembangunan dan Perekonomian Bangsa dengan Tata Kelola Baik</span></p>');
+(1, 'BPJAMSOSTEK', '00b1d3bbe4da8021954a06dff22bb9a2.png', '1', '<p><span xss=removed>Mewujudkan Jaminan Sosial Ketenagakerjaan yang Terpercaya, Berkelanjutan dan Menyejahterakan Seluruh Pekerja Indonesia</span><br></p>', '<p><span xss=removed>-</span><b> </b><span xss=removed>Melindungi, Melayani & Menyejahterakan Pekerja dan Keluarga</span></p><p><span xss=removed>- </span><span xss=removed>Memberikan rasa Aman, Mudah & Nyaman untuk Meningkatkan Produktivitas dan Daya Saing Peserta</span></p><p><span xss=removed>- </span><span xss=removed>Memberikan Kontribusi dalam Pembangunan dan Perekonomian Bangsa dengan Tata Kelola Baik</span></p>');
 
 -- --------------------------------------------------------
 
@@ -276,6 +358,7 @@ INSERT INTO `slider` (`id`, `foto`, `urutan`, `aktif`) VALUES
 CREATE TABLE `supplier` (
   `id_supplier` int(11) NOT NULL,
   `nama_supplier` varchar(50) NOT NULL,
+  `toko` varchar(100) NOT NULL,
   `no_telp` varchar(15) NOT NULL,
   `alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -284,12 +367,13 @@ CREATE TABLE `supplier` (
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `no_telp`, `alamat`) VALUES
-(4, 'Andi Suhendra', '08960291739', 'Jalan Citra No. 48'),
-(5, 'Jefry Pratama', '0812384098431', 'Jalan Mawar No. 24'),
-(6, 'Denis Irwin', '089991823893', 'Jalan Patih Rumbih No. 14'),
-(7, 'Ahmad Supriyadi', '0896339120000', 'Jalan Anggrek Gg. Abadi No. 15'),
-(8, 'Syarif Hidayat', '081281738976', 'Jalan Sulawesi No. 99');
+INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `toko`, `no_telp`, `alamat`) VALUES
+(4, 'Andi Suhendra', 'Nusantara Elektronik', '089602917399', 'Jalan Citra Abadi'),
+(5, 'Jefry Pratama', 'Jaya Lestari', '081238409843', 'Jalan Mawar'),
+(6, 'Denis Irwin', 'Aneka Elektronik', '089991823893', 'Jalan Patih Rumbih'),
+(7, 'Ahmad Supriyadi', 'Raja Elektronik', '089633912000', 'Jalan Anggrek'),
+(8, 'Syarif Hidayat', 'Sentosa', '081281738976', 'Jalan Sulawesi'),
+(9, 'Andi Suherman', 'Jaya Makmur', '0895700555390', 'Jalan Tendean');
 
 -- --------------------------------------------------------
 
@@ -315,12 +399,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `no_telp`, `role`, `password`, `created_at`, `foto`, `is_active`) VALUES
-(1, 'Muhammad Ali Zainal Abidin', 'admin', 'admin@admin.com', '0895700555390', 'admin', '$2y$10$wMgi9s3FEDEPEU6dEmbp8eAAEBUXIXUy3np3ND2Oih.MOY.q/Kpoy', 1568689561, 'eca1adc150cdf684720445d4c770532a.jpg', 1),
-(7, 'Arfan', 'arfandotid', 'arfandotid@gmail.com', '081221528805', 'gudang', '$2y$10$5es8WhFQj8xCmrhDtH86Fu71j97og9f8aR4T22soa7716kAusmaeK', 1568691611, 'user.png', 1),
-(8, 'Muhammad Ghifari Arfananda', 'mghifariarfan', 'mghifariarfan@gmail.com', '085697442673', 'gudang', '$2y$10$5SGUIbRyEXH7JslhtEegEOpp6cvxtK6X.qdiQ1eZR7nd0RZjjx3qe', 1568691629, 'user.png', 1),
-(9, 'Ali', 'mazasih', 'aliaza@gmail.com', '0895700555390', 'admin', '$2y$10$Ij1fKPCuKddACJSISM/h5OpSH7P/TWPY9Q9ssFw3XhBA7EOmaWVyC', 1644547550, 'user.png', 0),
-(10, 'Dedi Cahyadi', 'dediNihBoss', 'dedi@gmail.com', '089691254981', 'admin', '$2y$10$abQ5oSTfiPETmXPZH2nUme2odZODUMe1uUd0ostmj92MSbSkJCzdW', 1644547609, 'user.png', 0),
-(11, 'Lisa', 'ayang', 'lisa@gmail.com', '081234097190', 'gudang', '$2y$10$NJS8MJcs9L75xHOijN7DMehMaogxnGOmhB8XQslOC6uJML.Dvay1O', 1644547664, 'user.png', 0);
+(1, 'Muhammad', 'admin', 'admin@admin.com', '0895700555390', 'admin', '$2y$10$wMgi9s3FEDEPEU6dEmbp8eAAEBUXIXUy3np3ND2Oih.MOY.q/Kpoy', 1568689561, 'eca1adc150cdf684720445d4c770532a.jpg', 1),
+(12, 'User', 'user', 'user@gmail.com', '081231415552', 'gudang', '$2y$10$uqXyUOJpZDCrowGXISK1l.rmbA/Pxls6q/yLlDoov0dg86SeZs.42', 1655127381, 'user.png', 1);
 
 --
 -- Indexes for dumped tables
@@ -332,16 +412,16 @@ INSERT INTO `user` (`id_user`, `nama`, `username`, `email`, `no_telp`, `role`, `
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`),
   ADD KEY `satuan_id` (`satuan_id`),
-  ADD KEY `kategori_id` (`jenis_id`),
-  ADD KEY `penempatan_id` (`penempatan_id`);
+  ADD KEY `kategori_id` (`jenis_id`);
 
 --
 -- Indexes for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
   ADD PRIMARY KEY (`id_barang_keluar`),
-  ADD KEY `id_user` (`user_id`),
-  ADD KEY `barang_id` (`barang_id`);
+  ADD KEY `barang_id` (`barang_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `ruangan_id` (`ruangan_id`);
 
 --
 -- Indexes for table `barang_maintenance`
@@ -375,10 +455,34 @@ ALTER TABLE `jenis`
   ADD PRIMARY KEY (`id_jenis`);
 
 --
--- Indexes for table `penempatan_brg`
+-- Indexes for table `pegawai`
 --
-ALTER TABLE `penempatan_brg`
-  ADD PRIMARY KEY (`id_penempatan_brg`);
+ALTER TABLE `pegawai`
+  ADD PRIMARY KEY (`id_pegawai`);
+
+--
+-- Indexes for table `penempatan`
+--
+ALTER TABLE `penempatan`
+  ADD PRIMARY KEY (`id_penempatan`),
+  ADD KEY `barang_id` (`barang_id`),
+  ADD KEY `pegawai_id` (`pegawai_id`),
+  ADD KEY `ruangan_id` (`ruangan_id`);
+
+--
+-- Indexes for table `pengguna_brg`
+--
+ALTER TABLE `pengguna_brg`
+  ADD PRIMARY KEY (`id_pengguna`),
+  ADD KEY `pegawai_id` (`pegawai_id`),
+  ADD KEY `barang_id` (`barang_id`),
+  ADD KEY `jenis_id` (`jenis_id`);
+
+--
+-- Indexes for table `ruangan`
+--
+ALTER TABLE `ruangan`
+  ADD PRIMARY KEY (`id_ruangan`);
 
 --
 -- Indexes for table `satuan`
@@ -418,31 +522,43 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang_maintenance`
 --
 ALTER TABLE `barang_maintenance`
-  MODIFY `id_barang_maintenance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_barang_maintenance` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `barang_rusak`
 --
 ALTER TABLE `barang_rusak`
-  MODIFY `id_barang_rusak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_barang_rusak` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
-  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_jenis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `penempatan_brg`
+-- AUTO_INCREMENT for table `pegawai`
 --
-ALTER TABLE `penempatan_brg`
-  MODIFY `id_penempatan_brg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `pegawai`
+  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `pengguna_brg`
+--
+ALTER TABLE `pengguna_brg`
+  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `ruangan`
+--
+ALTER TABLE `ruangan`
+  MODIFY `id_ruangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `satuan`
 --
 ALTER TABLE `satuan`
-  MODIFY `id_satuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_satuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `slider`
@@ -454,13 +570,13 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -471,15 +587,15 @@ ALTER TABLE `user`
 --
 ALTER TABLE `barang`
   ADD CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`satuan_id`) REFERENCES `satuan` (`id_satuan`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`jenis_id`) REFERENCES `jenis` (`id_jenis`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `barang_ibfk_3` FOREIGN KEY (`penempatan_id`) REFERENCES `penempatan_brg` (`id_penempatan_brg`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`jenis_id`) REFERENCES `jenis` (`id_jenis`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `barang_keluar`
 --
 ALTER TABLE `barang_keluar`
-  ADD CONSTRAINT `barang_keluar_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `barang_keluar_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `barang_keluar_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `barang_keluar_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `barang_keluar_ibfk_5` FOREIGN KEY (`ruangan_id`) REFERENCES `ruangan` (`id_ruangan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `barang_maintenance`
@@ -502,6 +618,21 @@ ALTER TABLE `barang_masuk`
 ALTER TABLE `barang_rusak`
   ADD CONSTRAINT `barang_rusak_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `barang_rusak_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `penempatan`
+--
+ALTER TABLE `penempatan`
+  ADD CONSTRAINT `penempatan_ibfk_1` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penempatan_ibfk_2` FOREIGN KEY (`pegawai_id`) REFERENCES `pegawai` (`id_pegawai`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penempatan_ibfk_3` FOREIGN KEY (`ruangan_id`) REFERENCES `ruangan` (`id_ruangan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pengguna_brg`
+--
+ALTER TABLE `pengguna_brg`
+  ADD CONSTRAINT `pengguna_brg_ibfk_1` FOREIGN KEY (`pegawai_id`) REFERENCES `pegawai` (`id_pegawai`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pengguna_brg_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

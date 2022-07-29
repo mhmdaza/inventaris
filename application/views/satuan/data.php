@@ -13,7 +13,7 @@
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Tambah Satuan Barang
+                        Tambah Data
                     </span>
                 </a>
             </div>
@@ -33,7 +33,7 @@
                 $no = 1;
                 if ($satuan) :
                     foreach ($satuan as $j) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= $j['nama_satuan']; ?></td>
