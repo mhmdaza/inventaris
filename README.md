@@ -15,3 +15,4 @@ Database : <code>ci_barang</code><br/>
 # Inventaris
 # inventaris
 # inventaris
+# inventaris
